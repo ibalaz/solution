@@ -62,13 +62,13 @@ docker run -p 8000:8000 tickethub:latest
 
 ### Core Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/tickets` | Get paginated tickets with filtering |
-| GET | `/tickets/{id}` | Get detailed ticket with source data |
-| GET | `/tickets/search?q=...` | Search tickets by title |
-| GET | `/stats` | Get aggregated statistics |
-| GET | `/health` | Health check endpoint |
+| Method | Endpoint                    | Description |
+|--------|-----------------------------|-------------|
+| GET | `/tickets`                  | Get paginated tickets with filtering |
+| GET | `/tickets/{id}`             | Get detailed ticket with source data |
+| GET | `/tickets/search?title=...` | Search tickets by title |
+| GET | `/stats`                    | Get aggregated statistics |
+| GET | `/health`                   | Health check endpoint |
 
 ### Authentication
 
@@ -83,7 +83,7 @@ docker run -p 8000:8000 tickethub:latest
 - `size` (int): Page size (default: 20, max: 100)
 - `status` (string): Filter by status (`open`, `closed`)
 - `priority` (string): Filter by priority (`low`, `medium`, `high`)
-- `q` (string): Search query for title
+- `title` (string): Search query for title
 
 **Example Requests:**
 ```bash
@@ -94,7 +94,7 @@ curl http://localhost:8000/tickets
 curl "http://localhost:8000/tickets?status=open&priority=high"
 
 # Search tickets
-curl "http://localhost:8000/tickets/search?q=bug"
+curl "http://localhost:8000/tickets/search?title=bug"
 
 # Get ticket details
 curl http://localhost:8000/tickets/1
@@ -227,7 +227,7 @@ tickethub/
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PYTHONPATH` | `/app` | Python path for imports |
-| `SECRET_KEY` | `your-secret-key...` | JWT secret (change in production) |
+| `SECRET_KEY` | `...` | JWT secret (change in production) |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | `30` | Token expiration time |
 
 ### Rate Limits
@@ -241,35 +241,9 @@ tickethub/
 | `/tickets/{id}` | 200/minute |
 | `/stats` | 20/minute |
 
-## Production Deployment
-
-### Docker Compose (Recommended)
-
-```yaml
-# docker-compose.prod.yml
-version: '3.8'
-services:
-  tickethub:
-    image: tickethub:latest
-    ports:
-      - "8000:8000"
-    environment:
-      - SECRET_KEY=your-production-secret-key
-    restart: unless-stopped
-    
-  redis:
-    image: redis:7-alpine
-    volumes:
-      - redis_data:/data
-    restart: unless-stopped
-      
-volumes:
-  redis_data:
-```
 
 ### Security Considerations
 
-- Change `SECRET_KEY` in production
 - Use HTTPS in production
 - Configure proper CORS origins
 - Monitor rate limits
