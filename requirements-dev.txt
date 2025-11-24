@@ -3,5 +3,5 @@ black==25.9.0
 isort==7.0.0
 flake8==7.3.0
 mypy==1.18.2
-safety==3.6.2
+safety==3.7.0
 bandit==1.9.2
