@@ -1,6 +1,6 @@
 # Development dependencies
 black==26.1.0
-isort==7.0.0
+isort==8.0.1
 flake8==7.3.0
 mypy==1.19.0
 safety==3.7.0
