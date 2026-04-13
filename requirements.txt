@@ -8,5 +8,5 @@ uvicorn[standard]==0.43.0
 python-jose[cryptography]==3.5.0
 passlib[bcrypt]==1.7.4
 redis==7.4.0
-python-multipart==0.0.24
+python-multipart==0.0.26
 slowapi==0.1.9
